@@ -1,5 +1,5 @@
 # Assignment 1
-
+##Summary
 | attempt  | training time | accuracy (%) | hidden layer 1 size | hidden layer 1 cell | hidden layer 1 activation | weight init          | early stopping  | learning rate                                                                            | mini batch size   | training size | valid size |
 |----------|---------------|--------------|---------------------|---------------------|---------------------------|----------------------|-----------------|------------------------------------------------------------------------------------------|-------------------|---------------|------------|
 | original | 73.92020679   | 62           | 4                   | basic               | sigmoid                   | random uniform       | N/A             | 0.01                                                                                     | 1 (no mini batch) | 4000          | 0          |
