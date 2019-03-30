@@ -46,6 +46,8 @@
 
 ### loss function
 
+Changed loss function to avoid Nan error by log(0), in case of predicted_outputs being 0
+
 original loss function:
 
 ```python
