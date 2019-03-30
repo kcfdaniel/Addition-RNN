@@ -46,15 +46,15 @@
 
 ### loss function
 
-Changed loss function to avoid Nan error by log(0), in case of predicted_outputs being 0
+Changed loss function to avoid Nan error by log(0), in case of predicted_outputs being 0:
 
-original loss function:
+_original loss function_:
 
 ```python
 error = -(outputs * tf.log(predicted_outputs) + (1.0 - outputs) * tf.log(1.0 - predicted_outputs))
 ```
 
-new loss function:
+_new loss function_:
 
 ```python
 TINY          = 1e-6    # to avoid NaNs in logs 
