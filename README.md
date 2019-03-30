@@ -2,7 +2,7 @@
 
 **Summary**
 
-| attempt  | training time | accuracy (%) | hidden layer 1 size | hidden layer 1 cell | hidden layer 1 activation | weight init          | early stopping  | learning rate                                                                            | mini batch size   | training size | valid size | remarks                     |
+| attempt  | training time | accuracy (%) | hidden layer size | hidden layer cell | hidden layer activation | weight init          | early stopping  | learning rate                                                                            | mini batch size   | training size | valid size | remarks                     |
 |----------|---------------|--------------|---------------------|---------------------|---------------------------|----------------------|-----------------|------------------------------------------------------------------------------------------|-------------------|---------------|------------|-----------------------------|
 | original | 73.92020679   | 62           | 4                   | basic               | sigmoid                   | random uniform       | N/A             | 0.01                                                                                     | 1 (no mini batch) | 4000          | 0          |                             |
 | 1        |               | 85           | 4                   | basic               | sigmoid                   | **xavier initlaization** | **valid error < 1** | 0.01                                                                                     | **256**               | **3000**          | **1000**       | **fixed bug: input to network** |
@@ -28,8 +28,23 @@
 ---
 **Checklist of Possibilities**
 
-* Unordered list can use asterisks
-* Unordered list can use asterisks
-* Unordered list can use asterisks
-* Unordered list can use asterisks
-* Unordered list can use asterisks
+* loss function
+* optimizer
+* hidden layer size
+* hidden layer cell type
+* hidden layer activation function
+* weight initialization
+* early stopping (with validation)
+* learning rate (decay)
+* mini batch size
+* regularization
+
+---
+**Reporting**
+original loss function:
+```error = -(outputs * tf.log(predicted_outputs + TINY) + (1.0 - outputs) * tf.log(1.0 - predicted_outputs + TINY))
+```
+
+```TINY          = 1e-6    # to avoid NaNs in logs
+new loss function:
+```
