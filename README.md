@@ -26,7 +26,8 @@
 | 19       | 10.8763442    | 100          | **28**                  | lstm                | tanh                      | xavier initlaization | valid error < 1 | decayed_lr = tf.train.exponential_decay(0.06, global_step, 100000, 0.99, staircase=True) | 500               | 3000          | 1000       | fixed bug: input to network |
 
 ---
-**Checklist of Possibilities**
+
+## Checklist of Possibilities
 
 * loss function
 * optimizer
@@ -40,10 +41,17 @@
 * regularization
 
 ---
-**Reporting**
+
+## Reporting
+
+**loss function**
 original loss function:
 
-```error = -(outputs * tf.log(predicted_outputs + TINY) + (1.0 - outputs) * tf.log(1.0 - predicted_outputs + TINY))```
+```python
+error = -(outputs * tf.log(predicted_outputs) + (1.0 - outputs) * tf.log(1.0 - predicted_outputs))
+```
 
-```TINY          = 1e-6    # to avoid NaNs in logs
-new loss function:```
+```python
+TINY          = 1e-6    # to avoid NaNs in logs 
+new loss function:
+```
