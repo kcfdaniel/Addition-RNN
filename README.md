@@ -46,5 +46,4 @@ original loss function:
 ```error = -(outputs * tf.log(predicted_outputs + TINY) + (1.0 - outputs) * tf.log(1.0 - predicted_outputs + TINY))```
 
 ```TINY          = 1e-6    # to avoid NaNs in logs
-new loss function:
-```
+new loss function:```
