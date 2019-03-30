@@ -1,7 +1,5 @@
 # Assignment 1
 
-## Report
-
 ### Summary
 
 | attempt  | training time | accuracy (%) | hidden layer size | hidden layer cell | hidden layer activation | weight init          | early stopping  | learning rate                                                                            | mini batch size   | training size | valid size | remarks                     |
@@ -33,11 +31,11 @@
 
 * loss function
 * optimizer
+* mini batch size
 * hidden layer size
 * hidden layer cell type & hidden layer activation function & weight initialization
 * early stopping (with validation)
 * learning rate (decay)
-* mini batch size
 * regularization
 
 ---
@@ -51,19 +49,23 @@ Changed loss function to avoid Nan error by log(0), in case of predicted_outputs
 _original loss function_:
 
 ```python
-error = -(outputs * tf.log(predicted_outputs) + (1.0 - outputs) * tf.log(1.0 - predicted_outputs))
+error = tf.reduce_sum(-(outputs * tf.log(predicted_outputs) + (1.0 - outputs) * tf.log(1.0 - predicted_outputs)))
 ```
 
 _new loss function_:
 
 ```python
 TINY          = 1e-6    # to avoid NaNs in logs 
-error = -(outputs * tf.log(predicted_outputs + TINY) + (1.0 - outputs) * tf.log(1.0 - predicted_outputs + TINY))
+error = tf.reduce_sum(-(outputs * tf.log(predicted_outputs + TINY) + (1.0 - outputs) * tf.log(1.0 - predicted_outputs + TINY)))
 ```
 
 ### optimizer
 
 Adam optimizer is used, same as the original code.
+
+### mini batch size
+
+Different batch sizes were tested, the fastest training was obtained with a mini batch of 500 data points.  With a high batch size, the every training step takes a longer time, because of more computation needed, although the gradient direction would tend to point towards the global minimum.  With a small batch size, we lose the speedup by vectorizing the data, and the gradient of each training step would not be too accurately pointing towards the global minimum, but rather points at a local minimum of that small batch of data.
 
 ### hidden layer size
 
@@ -73,24 +75,23 @@ At attempt 18, it was found that the convergence speed is the fastest with 24 ls
 
 comparing
 
-1. basic rnn cells with sigmoid activation, random uniform weight initialization,
-2. basic rnn cells with tanh activation, xavier weight initlaization,
-3. basic rnn cells with relu activation, he weight initlaization,
-4. lstm cells with tanh activation, xavier weight initlaization,
+1. basic rnn cells with sigmoid activation, random uniform weight initialization
+2. basic rnn cells with tanh activation, xavier weight initlaization
+3. basic rnn cells with relu activation, he weight initlaization
+4. lstm cells with tanh activation, xavier weight initlaization
 
-it was found that 4. gives highest accuracy.
+it was found that **4. lstm cells with tanh activation, xavier weight initlaization** gives highest accuracy.
 
-Changed loss function to avoid Nan error by log(0), in case of predicted_outputs being 0:
+### early stopping (with validation)
 
-_original loss function_:
+3000 data points are used for training, 1000 data points are used for validation.
 
-```python
-error = -(outputs * tf.log(predicted_outputs) + (1.0 - outputs) * tf.log(1.0 - predicted_outputs))
-```
+Although with lstm in our case, the bias, variance are both low and no overfitting is observed, in order to determine when the training should stop, and compare the training time of different models with different settings, I used early stopping when training the network, and stop the training when the validation error drops below 1.  
 
-_new loss function_:
+### learning rate (decay)
 
-```python
-TINY          = 1e-6    # to avoid NaNs in logs 
-error = -(outputs * tf.log(predicted_outputs + TINY) + (1.0 - outputs) * tf.log(1.0 - predicted_outputs + TINY))
-```
+In order to speed up the training, I tried to bump up the learning rate, but around 0.06, the training error sometimes does not decrease smoothly.  So I added learning rate decay to slow down the learning gradually in the training process, while keeping a high learning rate at the beginning, and could speed up the training.
+
+### regularization
+
+Because little to none overfitting was observed, no regularization was needed.
