@@ -1,5 +1,7 @@
 # Assignment 1
 
+## Report
+
 ### Summary
 
 | attempt  | training time | accuracy (%) | hidden layer size | hidden layer cell | hidden layer activation | weight init          | early stopping  | learning rate                                                                            | mini batch size   | training size | valid size | remarks                     |
@@ -32,9 +34,7 @@
 * loss function
 * optimizer
 * hidden layer size
-* hidden layer cell type
-* hidden layer activation function
-* weight initialization
+* hidden layer cell type & hidden layer activation function & weight initialization
 * early stopping (with validation)
 * learning rate (decay)
 * mini batch size
@@ -45,6 +45,40 @@
 ## Reporting
 
 ### loss function
+
+Changed loss function to avoid Nan error by log(0), in case of predicted_outputs being 0:
+
+_original loss function_:
+
+```python
+error = -(outputs * tf.log(predicted_outputs) + (1.0 - outputs) * tf.log(1.0 - predicted_outputs))
+```
+
+_new loss function_:
+
+```python
+TINY          = 1e-6    # to avoid NaNs in logs 
+error = -(outputs * tf.log(predicted_outputs + TINY) + (1.0 - outputs) * tf.log(1.0 - predicted_outputs + TINY))
+```
+
+### optimizer
+
+Adam optimizer is used, same as the original code.
+
+### hidden layer size
+
+At attempt 18, it was found that the convergence speed is the fastest with 24 lstm cell.
+
+### hidden layer cell type & hidden layer activation function & weight initialization
+
+comparing
+
+1. basic rnn cells with sigmoid activation, random uniform weight initialization,
+2. basic rnn cells with tanh activation, xavier weight initlaization,
+3. basic rnn cells with relu activation, he weight initlaization,
+4. lstm cells with tanh activation, xavier weight initlaization,
+
+it was found that 4. gives highest accuracy.
 
 Changed loss function to avoid Nan error by log(0), in case of predicted_outputs being 0:
 
