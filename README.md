@@ -1,6 +1,6 @@
 # Assignment 1
 
-**Summary**
+### Summary
 
 | attempt  | training time | accuracy (%) | hidden layer size | hidden layer cell | hidden layer activation | weight init          | early stopping  | learning rate                                                                            | mini batch size   | training size | valid size | remarks                     |
 |----------|---------------|--------------|---------------------|---------------------|---------------------------|----------------------|-----------------|------------------------------------------------------------------------------------------|-------------------|---------------|------------|-----------------------------|
@@ -44,7 +44,8 @@
 
 ## Reporting
 
-**loss function**
+### loss function
+
 original loss function:
 
 ```python
