@@ -27,7 +27,9 @@
 
 ---
 **Checklist of Possibilities**
-⋅⋅* Unordered sub-list. 
-⋅⋅* Unordered sub-list. 
-⋅⋅* Unordered sub-list. 
-⋅⋅* Unordered sub-list. 
+
+* Unordered list can use asterisks
+* Unordered list can use asterisks
+* Unordered list can use asterisks
+* Unordered list can use asterisks
+* Unordered list can use asterisks
