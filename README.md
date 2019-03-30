@@ -29,6 +29,7 @@
 
 ## Checklist of Possibilities
 
+* input feature
 * loss function
 * optimizer
 * mini batch size
@@ -41,6 +42,38 @@
 ---
 
 ## Reporting
+
+### input feature
+
+In the original code, the input feature is wrong.
+
+_original way of obtaining iuput features_:
+
+```python
+a = np.array(a_list[j], dtype=np.uint8) #changed
+b = np.array(b_list[j], dtype=np.uint8) #changed
+ab = np.c_[a,b]
+x = np.array(ab).reshape([1, binary_dim, 2])
+```
+
+E.g.
+a = [a0 a1 a2 a3 a4 a5 a6 a7]
+b = [b0 b1 b2 b3 b4 b5 b6 b7]
+ab = [a0 a1 a2 a3 a4 a5 a6 a7 b0 b1 b2 b3 b4 b5 b6 b7]
+x = [[[a0 a1] [a2 a3] [a4 a5] [a6 a7] [b0 b1] [b2 b3] [b4 b5] [b6 b7]]]
+
+_new way of obtaining input features_ :
+
+```python
+a = np.transpose([[a_list[j]]])
+b = np.transpose([[b_list[j]]])
+x = np.concatenate((a,b), axis=2)
+```
+
+E.g.
+a = [[[a0]] [[a1]] [[a2]] [[a3]] [[a4]] [[a5]] [[a6]] [[a7]]]
+b = [[[b0]] [[b1]] [[b2]] [[b3]] [[b4]] [[b5]] [[b6]] [[b7]]]
+x = [[[a0 b0] [a1 b1] [a2 b2] [a3 b3] [a4 b4] [a5 b5] [a6 b6] [a7 b7]]]
 
 ### loss function
 
